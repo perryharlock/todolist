@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="utf-8"/>
+    <title>To do list</title>
+
+    <!-- For mobile devices. -->
+    <meta name="viewport" content="width=device-width"/>
+
+    <!-- This site had been built using LESS. This is the compiled and minified CSS
+    To see the individual LESS files navigate to the /less/ folder
+    This will show you the individual less files :-) -->
+	<link rel="stylesheet" href="css/main.css" type="text/css" media="screen" />
+
+</head>
+
+<!--[if IE 7]><body class="no-javascript ie7"><![endif]-->
+<!--[if IE 8]><body class="no-javascript ie8"><![endif]-->
+<!--[if IE 9]><body class="no-javascript ie9"><![endif]-->
+<!--[if !IE]>-->
+<body id="top" class="no-javascript">
+<!--<![endif]-->
+
+    <div class="grid">
+        <div class="col-12">
+            <h2>List Items</h2>
+            <table data-role='to-do-list'>
+                <thead>
+                    <tr>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Deadline
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Options
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input id="description" type="text" placeholder="e.g. Complete to do's for next week" />
+                        </td>
+                        <td>
+                            <input id="deadline" type="text" placeholder="Format dd/mm/yyy"/>
+                        </td>
+                        <td>
+                            <select id="status">
+                                <option value="Not started">Not started</option>
+                                <option value="In progress">In Progress</option>
+                                <option value="Complete">Complete</option>
+                            </select>
+                        </td>
+                        <td>
+                            <a data-role="add-button" href="#">Add</a>
+                        </td>
+                    </tr>
+                    <script type="text/html" data-role="table-row">
+                        <tr>
+                            <td>
+                                <input id='description' type='text' disabled/>
+                            </td>
+                            <td>
+                                <input id='description' type='text' value='" + inputDeadline + "' disabled/>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            <a data-role='edit-button' href='#'>Edit</a> | <a data-role='delete-button' href='#'>Delete</a>
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Javascript loveliness. -->
+    <script type="text/javascript" src="js/vendor/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/script.js" ></script>
+
+</body>
+</html>
