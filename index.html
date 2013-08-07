@@ -44,37 +44,22 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input id="description" type="text" placeholder="e.g. Complete to do's for next week" />
+                            <input class="description" type="text" placeholder="e.g. Complete to do's for next week" />
                         </td>
                         <td>
-                            <input id="deadline" type="text" placeholder="Format dd/mm/yyy"/>
+                            <input class="deadline" type="text" placeholder="Format dd/mm/yyy"/>
                         </td>
                         <td>
-                            <select id="status">
+                            <select class="status">
                                 <option value="Not started">Not started</option>
                                 <option value="In progress">In Progress</option>
                                 <option value="Complete">Complete</option>
                             </select>
                         </td>
                         <td>
-                            <a data-role="add-button" href="#">Add</a>
+                            <a data-role="add-button" class="button btn-small" href="#">Add</a>
                         </td>
                     </tr>
-                    <script type="text/html" data-role="row-template">
-                        <tr>
-                            <td>
-                                <input id='description' type='text' disabled/>
-                            </td>
-                            <td>
-                                <input id='description' type='text' disabled/>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            <a data-role='edit-button' href='#'>Edit</a> | <a data-role='delete-button' href='#'>Delete</a>
-                            </td>
-                        </tr>
-                    </script>
                 </tbody>
             </table>
         </div>
