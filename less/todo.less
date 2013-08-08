@@ -1,0 +1,59 @@
+.to-do-list {
+  input, select {
+    border:none;
+    background:#fff;
+  }
+  tr td {
+    background-color:#fff;
+  }
+  th, tr, td {
+    border:none;
+  }
+  thead {
+    border-top:none;
+  }
+  th {
+    width:26%;
+  }
+  th.controls {
+    width:20%;
+  }
+  div {
+    padding:6px 9px 8px 9px;
+  }
+  div.status {
+    padding-left:12px;
+  }
+}
+
+tr.removed-item {
+  animation: removed-item-animation .6s cubic-bezier(.55,-0.04,.91,.94) forwards;
+}
+
+tr.added-item {
+  animation: new-item-animation .6s cubic-bezier(.55,-0.04,.91,.94) forwards;
+}
+ 
+@keyframes removed-item-animation {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+ 
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes new-item-animation {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+ 
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

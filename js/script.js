@@ -12,11 +12,11 @@ $(document).ready(function(){
   var $toDoList = "[data-role='to-do-list']";
   var $entryCount = 0;
   var $inputDescription = "input.description";
-  var $spanDescription = "span.description";
+  var $divDescription = "div.description";
   var $inputDeadline = "input.deadline";
-  var $spanDeadline = "span.deadline";
+  var $divDeadline = "div.deadline";
   var $selectStatus = "select.status";
-  var $spanStatus = "span.status";
+  var $divStatus = "div.status";
 
 
   // TRIGGERS
@@ -57,10 +57,10 @@ $(document).ready(function(){
   $($toDoList).on("click", $cancelButton, function(event){
     var el = $(this).closest("tr");
     event.preventDefault();
-    var spanDesc = el.find($spanDescription).html();
-    var spanDeadline = el.find($spanDeadline).html();
-    var spanStatus = el.find($spanStatus).val();
-    cancelUpdate(el, spanDesc, spanDeadline, spanStatus);
+    var divDesc = el.find($divDescription).html();
+    var divDeadline = el.find($divDeadline).html();
+    var divStatus = el.find($divStatus).html();
+    cancelUpdate(el, divDesc, divDeadline, divStatus);
   });
 
 
@@ -72,17 +72,17 @@ $(document).ready(function(){
     var inputDeadline = el.find($inputDeadline).val();
     var inputStatus = el.find($selectStatus).val();
     $entryCount++;
-    var tablerow = "<tr id='row" + $entryCount + "'>\
+    var tablerow = "<tr class='added-item' id='row" + $entryCount + "'>\
     <td>\
-      <span class='description'>" + inputDesc + "</span>\
+      <div class='description'>" + inputDesc + "</div>\
       <input class='description hidden' type='text' value='" + inputDesc + "'/></td>\
     </td>\
     <td>\
-      <span class='deadline'>" + inputDeadline + "</span>\
+      <div class='deadline'>" + inputDeadline + "</div>\
       <input class='deadline hidden' type='text' value='" + inputDeadline + "'/></td>\
     </td>\
     <td>\
-      <span class='status'>" + inputStatus + "</span>\
+      <div class='status'>" + inputStatus + "</div>\
       <select class='status hidden'>\
         <option value='Not started'>Not started</option>\
         <option value='In progress'>In progress</option>\
@@ -108,7 +108,11 @@ $(document).ready(function(){
 
   // Delete a row
   function deleteRow(el) {
-    el.remove();
+    el.removeClass('added-item');
+    el.addClass('removed-item');
+    window.setTimeout(function(){
+      el.remove();
+    }, 600);
   }
 
   // Edit a row
@@ -118,22 +122,22 @@ $(document).ready(function(){
 
   // Save a row
   function saveRow(el, inputDesc, inputDeadline, inputStatus) {
-    el.find($spanDescription).html(inputDesc);
-    el.find($spanDeadline).html(inputDeadline);
-    el.find($spanStatus).html(inputStatus);
+    el.find($divDescription).html(inputDesc);
+    el.find($divDeadline).html(inputDeadline);
+    el.find($divStatus).html(inputStatus);
     toggleRowStatus(el);
   }
 
   // Cancel update
-  function cancelUpdate(el, spanDesc, spanDeadline, spanStatus) {
-    el.find($inputDescription).val(spanDesc);
-    el.find($inputDeadline).val(spanDeadline);
-    el.find($selectStatus).val(spanStatus);
+  function cancelUpdate(el, divDesc, divDeadline, divStatus) {
+    el.find($inputDescription).val(divDesc);
+    el.find($inputDeadline).val(divDeadline);
+    el.find($selectStatus).val(divStatus);
     toggleRowStatus(el);
   }
 
   function toggleRowStatus(el) {
-    el.find("input, span, select").toggleClass('hidden');
+    el.find("input, div, select").toggleClass('hidden');
     el.find($buttons).toggleClass('hidden');
   }
 
