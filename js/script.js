@@ -3,14 +3,14 @@ $(document).ready(function(){
 	$("body.no-javascript").removeClass("no-javascript");
 
   // Elements
-  var addButton = "[data-role='add-button']";
-  var deleteButton = "[data-role='delete-button']";
-  var editButton = "[data-role='edit-button']";
-  var saveButton = "[data-role='save-button']";
-  var cancelButton = "[data-role='cancel-button']";
-  var buttons = ".button";
-  var toDoList = "[data-role='to-do-list']";
-  var entryCount = 0;
+  var $addButton = "[data-role='add-button']";
+  var $deleteButton = "[data-role='delete-button']";
+  var $editButton = "[data-role='edit-button']";
+  var $saveButton = "[data-role='save-button']";
+  var $cancelButton = "[data-role='cancel-button']";
+  var $buttons = ".button";
+  var $toDoList = "[data-role='to-do-list']";
+  var $entryCount = 0;
   var $inputDescription = "input.description";
   var $spanDescription = "span.description";
   var $inputDeadline = "input.deadline";
@@ -22,7 +22,7 @@ $(document).ready(function(){
   // TRIGGERS
 
   // Add a row click
-  $(toDoList).on("click", addButton, function(event){
+  $($toDoList).on("click", $addButton, function(event){
     var el = $(this).closest("tr");
     event.preventDefault();
     addRow(el);
@@ -30,21 +30,21 @@ $(document).ready(function(){
   });
 
   // Delete a row click
-  $(toDoList).on("click", deleteButton, function(event){
+  $($toDoList).on("click", $deleteButton, function(event){
     var el = $(this).closest("tr");
     event.preventDefault();
     deleteRow(el);
   });
 
   // Edit a row click
-  $(toDoList).on("click", editButton, function(event){
+  $($toDoList).on("click", $editButton, function(event){
     var el = $(this).closest("tr");
     event.preventDefault();
     editRow(el);
   });
 
   // Save a row click
-  $(toDoList).on("click", saveButton, function(event){
+  $($toDoList).on("click", $saveButton, function(event){
     var el = $(this).closest("tr");
     event.preventDefault();
     var inputDesc = el.find($inputDescription).val();
@@ -54,10 +54,13 @@ $(document).ready(function(){
   });
 
   // Cancel an update to a row click
-  $(toDoList).on("click", cancelButton, function(event){
+  $($toDoList).on("click", $cancelButton, function(event){
     var el = $(this).closest("tr");
     event.preventDefault();
-    cancelUpdate(el);
+    var spanDesc = el.find($spanDescription).html();
+    var spanDeadline = el.find($spanDeadline).html();
+    var spanStatus = el.find($spanStatus).val();
+    cancelUpdate(el, spanDesc, spanDeadline, spanStatus);
   });
 
 
@@ -68,8 +71,8 @@ $(document).ready(function(){
     var inputDesc = el.find($inputDescription).val();
     var inputDeadline = el.find($inputDeadline).val();
     var inputStatus = el.find($selectStatus).val();
-    entryCount++;
-    var tablerow = "<tr id='row" + entryCount + "'>\
+    $entryCount++;
+    var tablerow = "<tr id='row" + $entryCount + "'>\
     <td>\
       <span class='description'>" + inputDesc + "</span>\
       <input class='description hidden' type='text' value='" + inputDesc + "'/></td>\
@@ -93,8 +96,8 @@ $(document).ready(function(){
     </td>\
     </tr>";
 
-    $(toDoList).append(tablerow);
-    var $el = $('#row' + entryCount);
+    $($toDoList).append(tablerow);
+    var $el = $('#row' + $entryCount);
     $el.find($selectStatus).val(inputStatus);
   }
 
@@ -122,13 +125,16 @@ $(document).ready(function(){
   }
 
   // Cancel update
-  function cancelUpdate(el) {
+  function cancelUpdate(el, spanDesc, spanDeadline, spanStatus) {
+    el.find($inputDescription).val(spanDesc);
+    el.find($inputDeadline).val(spanDeadline);
+    el.find($selectStatus).val(spanStatus);
     toggleRowStatus(el);
   }
 
   function toggleRowStatus(el) {
     el.find("input, span, select").toggleClass('hidden');
-    el.find(buttons).toggleClass('hidden');
+    el.find($buttons).toggleClass('hidden');
   }
 
 });
