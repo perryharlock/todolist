@@ -137,6 +137,7 @@ $(document).ready(function(){
   }
 
   function toggleRowStatus(el) {
+    el.toggleClass('editable');
     el.find("input, div, select").toggleClass('hidden');
     el.find($buttons).toggleClass('hidden');
   }
