@@ -5,8 +5,31 @@
 	.type-size(18px);
   border:solid 1px darken(@input-border, 5%);
 
+  .glyphicon {
+    cursor:pointer;
+  }
+
+  .glyphicon span {
+    padding-top:3px;
+      text-indent: -9999px;
+      white-space: nowrap;
+      overflow: hidden;
+      display:inline-block;
+      cursor:pointer;
+  }
+
   &:hover {
     text-decoration:none;
+    cursor:default;
+  }
+
+  &.disabled {
+    .opacity();
+    cursor:default;
+
+    .glyphicon {
+      cursor:default;
+    }
   }
 }
 
@@ -62,7 +85,7 @@
 }
 
 .btn-small {
-  padding:2px 5px;
+  padding:7px 7px 2px 7px;
   .type-size(14px);
 }
 
@@ -76,8 +99,10 @@
 
 .btn-success {
   background-color:@success-color;
+  color:@type-color-white;
 
   &:hover {
     background-color:darken(@success-color, 5%);
+    color:@type-color-white;
   }
 }

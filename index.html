@@ -31,7 +31,7 @@
                             Description
                         </th>
                         <th>
-                            Deadline
+                            Needed by
                         </th>
                         <th>
                             Status
@@ -51,13 +51,16 @@
                         </td>
                         <td>
                             <select class="status">
+                                <option selected value="">--Select Status--</option>
                                 <option value="Not started">Not started</option>
                                 <option value="In progress">In Progress</option>
                                 <option value="Complete">Complete</option>
                             </select>
                         </td>
                         <td>
-                            <a data-role="add-button" class="button btn-small" href="#">Add</a>
+                            <a data-role="add-button" class="button btn-small disabled" href="#">
+                                <span class='glyphicon glyphicon-plus'><span>Add</span></span>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
