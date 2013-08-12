@@ -52,7 +52,7 @@ $(document).ready(function(){
     inputDesc = el.find(inputDescription).val();
     inputDeadline = el.find(inputNeededby).val();
     inputStatus = el.find(selectStatus).val();
-    saveRow(el, inputDesc, inputDeadline, inputStatus);
+    saveRow(el, el.find(inputDescription).val(), el.find(inputNeededby).val(), el.find(selectStatus).val());
   });
 
   // Cancel an update to a row click
@@ -62,16 +62,15 @@ $(document).ready(function(){
     divDesc = el.find(divDescription).html();
     divDeadline = el.find(divNeededby).html();
     divStatus = el.find(divStatus).html();
-    cancelUpdate(el, divDesc, divDeadline, divStatus);
+    cancelUpdate(el, el.find(divDescription).html(), el.find(divNeededby).html(), el.find(divStatus).html());
   });
 
-  // On input values changing
-  $(inputDescription + ',' + inputNeededby + ',' + selectStatus).change(function() {
+  //On input values changing
+  $(toDoList).on("change", inputDescription + ',' + inputNeededby + ',' + selectStatus, function(event){
     inputDescriptionValue = $(inputDescription).val();
     inputDeadlineValue = $(inputNeededby).val();
     selectStatusValue = $(selectStatus).val();
     toggleAddButtonStatus(inputDescriptionValue, inputDeadlineValue, selectStatusValue);
-    console.log(inputDescriptionValue);
   });
 
 
@@ -134,14 +133,17 @@ $(document).ready(function(){
 
   // Save a row
   function saveRow(el, inputDesc, inputDeadline, inputStatus) {
-    el.find(divDescription).html(inputDesc);
-    el.find(divNeededby).html(inputDeadline);
-    el.find(divStatus).html(inputStatus);
+    console.log('saveRow(' + el.length + ', ' + inputDesc + ', ' + inputDeadline + ', ' + inputStatus + ')');
+    el.find(divDescription).html(inputDesc || '');
+    el.find(divNeededby).html(inputDeadline || '');
+    el.find(divStatus).html(inputStatus || '');
+    console.log('divStatus length is ' + el.find(divStatus).length);
     toggleRowStatus(el);
   }
 
   // Cancel update
   function cancelUpdate(el, divDesc, divDeadline, divStatus) {
+    console.log('cancelUpdate(' + el.length + ', ' + divDesc + ', ' + divDeadline + ', ' + divStatus + ')');
     el.find(inputDescription).val(divDesc);
     el.find(inputNeededby).val(divDeadline);
     el.find(selectStatus).val(divStatus);
