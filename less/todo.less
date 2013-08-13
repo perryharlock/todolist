@@ -4,11 +4,11 @@
     background:#f2f2f2;
     
   }
-  tr td {
-    background-color:#ffffff;
-  }
   th, tr, td {
     border:none;
+  }
+  tr td {
+    background-color:#ffffff;
   }
   thead {
     border-top:none;
@@ -34,32 +34,68 @@
 
 tr.removed-item {
   animation: removed-item-animation .6s cubic-bezier(.55,-0.04,.91,.94) forwards;
+  -webkit-animation: removed-item-animation .6s cubic-bezier(.55,-0.04,.91,.94) forwards;
 }
 
 tr.added-item {
   animation: new-item-animation .6s cubic-bezier(.55,-0.04,.91,.94) forwards;
+  -webkit-animation: new-item-animation .6s cubic-bezier(.55,-0.04,.91,.94) forwards;
 }
  
-@keyframes removed-item-animation {
+@keyframes removed-item-animation{
   from {
     opacity: 1;
     transform: scale(1);
+    -webkit-transform: scale(1);
   }
  
   to {
     opacity: 0;
     transform: scale(0);
+    -webkit-transform: scale(0);
   }
 }
 
-@keyframes new-item-animation {
+@keyframes new-item-animation
+ {
   from {
     opacity: 0;
     transform: scale(0);
+    -webkit-transform: scale(0);
   }
  
   to {
     opacity: 1;
     transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+
+@-webkit-keyframes removed-item-animation{
+  from {
+    opacity: 1;
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+ 
+  to {
+    opacity: 0;
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+}
+
+@-webkit-keyframes new-item-animation
+ {
+  from {
+    opacity: 0;
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+ 
+  to {
+    opacity: 1;
+    transform: scale(1);
+    -webkit-transform: scale(1);
   }
 }

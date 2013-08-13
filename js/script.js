@@ -2,6 +2,8 @@ $(document).ready(function(){
 	// Remove no-javascript class if js is enabled
 	$("body.no-javascript").removeClass("no-javascript");
 
+  $('.deadline').datepicker();
+
   // Elements
   var addButton = "[data-role='add-button']";
   var deleteButton = "[data-role='delete-button']";
@@ -102,7 +104,7 @@ $(document).ready(function(){
     </td>\
     <td>\
       <div class='deadline'>" + curInputDeadline + "</div>\
-      <input class='deadline hidden' type='text' value='" + curInputDeadline + "'/></td>\
+      <input class='deadline hidden' data-date-format='dd-mm-yyyy' type='text' value='" + curInputDeadline + "'/></td>\
     </td>\
     <td>\
       <div class='status'>" + curInputStatus + "</div>\
