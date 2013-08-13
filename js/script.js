@@ -13,8 +13,8 @@ $(document).ready(function(){
   var entryCount = 0;
   var inputDescription = "input.description";
   var divDescription = "div.description";
-  var inputNeededby = "input.deadline";
-  var divNeededby = "div.deadline";
+  var inputDeadline = "input.deadline";
+  var divDeadline = "div.deadline";
   var selectStatus = "select.status";
   var divStatus = "div.status";
 
@@ -50,9 +50,9 @@ $(document).ready(function(){
     var el = $(this).closest("tr");
     event.preventDefault();
     inputDesc = el.find(inputDescription).val();
-    inputDeadline = el.find(inputNeededby).val();
-    inputStatus = el.find(selectStatus).val();
-    saveRow(el, inputDesc, inputDeadline, inputStatus);
+    inputDead = el.find(inputDeadline).val();
+    inputStat = el.find(selectStatus).val();
+    saveRow(el, inputDesc, inputDead, inputStat);
   });
 
   // Cancel an update to a row click
@@ -60,16 +60,15 @@ $(document).ready(function(){
     var el = $(this).closest("tr");
     event.preventDefault();
     divDesc = el.find(divDescription).html();
-    divDeadline = el.find(divNeededby).html();
-    divStatus = el.find(divStatus).html();
-    cancelUpdate(el, divDesc, divDeadline, divStatus);
-    console.log('divStatus (' + el.find(divStatus).html() + ')');
+    divDead = el.find(divDeadline).html();
+    divStat = el.find(divStatus).html();
+    cancelUpdate(el, divDesc, divDead, divStat);
   });
 
   //On input values changing
-  $(toDoList).on("change", inputDescription + ',' + inputNeededby + ',' + selectStatus, function(event){
+  $(toDoList).on("change", inputDescription + ',' + inputDeadline + ',' + selectStatus, function(event){
     inputDescriptionValue = $(inputDescription).val();
-    inputDeadlineValue = $(inputNeededby).val();
+    inputDeadlineValue = $(inputDeadline).val();
     selectStatusValue = $(selectStatus).val();
     toggleAddButtonStatus(inputDescriptionValue, inputDeadlineValue, selectStatusValue);
   });
@@ -80,8 +79,8 @@ $(document).ready(function(){
   // Add a row
 	function addRow(el){
     var inputDesc = el.find(inputDescription).val();
-    var inputDeadline = el.find(inputNeededby).val();
-    var inputStatus = el.find(selectStatus).val();
+    var inputDead = el.find(inputDeadline).val();
+    var inputStat = el.find(selectStatus).val();
     entryCount++;
     var tablerow = "<tr class='added-item' id='row" + entryCount + "'>\
     <td>\
@@ -89,11 +88,11 @@ $(document).ready(function(){
       <input class='description hidden' type='text' value='" + inputDesc + "'/></td>\
     </td>\
     <td>\
-      <div class='deadline'>" + inputDeadline + "</div>\
-      <input class='deadline hidden' type='text' value='" + inputDeadline + "'/></td>\
+      <div class='deadline'>" + inputDead + "</div>\
+      <input class='deadline hidden' type='text' value='" + inputDead + "'/></td>\
     </td>\
     <td>\
-      <div class='status'>" + inputStatus + "</div>\
+      <div class='status'>" + inputStat + "</div>\
       <select class='status hidden'>\
         <option value='Not started'>Not started</option>\
         <option value='In progress'>In progress</option>\
@@ -109,7 +108,7 @@ $(document).ready(function(){
 
     $(toDoList).append(tablerow);
     var $el = $('#row' + entryCount);
-    $el.find(selectStatus).val(inputStatus);
+    $el.find(selectStatus).val(inputStat);
   }
 
   function emptyCurrentRow(el) {
@@ -134,19 +133,16 @@ $(document).ready(function(){
 
   // Save a row
   function saveRow(el, inputDesc, inputDeadline, inputStatus) {
-    console.log('saveRow(' + el.length + ', ' + inputDesc + ', ' + inputDeadline + ', ' + inputStatus + ')');
     el.find(divDescription).html(inputDesc || '');
-    el.find(divNeededby).html(inputDeadline || '');
+    el.find(divDeadline).html(inputDeadline || '');
     el.find(divStatus).html(inputStatus || '');
-    console.log('divStatus length is ' + el.find(divStatus).length);
     toggleRowStatus(el);
   }
 
   // Cancel update
   function cancelUpdate(el, divDesc, divDeadline, divStatus) {
-    console.log('cancelUpdate(' + el.length + ', ' + divDesc + ', ' + divDeadline + ', ' + divStatus + ')');
     el.find(inputDescription).val(divDesc);
-    el.find(inputNeededby).val(divDeadline);
+    el.find(inputDeadline).val(divDeadline);
     el.find(selectStatus).val(divStatus);
     toggleRowStatus(el);
   }
