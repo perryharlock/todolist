@@ -17,7 +17,9 @@ $(document).ready(function(){
   var divDeadline = "div.deadline";
   var selectStatus = "select.status";
   var divStatus = "div.status";
+  var highestCount = 0;
 
+  populateList();
 
   // TRIGGERS
 
@@ -36,7 +38,6 @@ $(document).ready(function(){
     var el = $(this).closest("tr");
     event.preventDefault();
     removeFromStorage(el.attr('id'));
-    console.log(el.attr('id'));
     deleteRow(el);
   });
 
@@ -84,8 +85,16 @@ $(document).ready(function(){
     var curInputDescription = el.find(inputDescription).val();
     var curInputDeadline = el.find(inputDeadline).val();
     var curInputStatus = el.find(selectStatus).val();
-    entryCount++;
-    var tablerow = "<tr class='added-item' id='row" + entryCount + "'>\
+    highestCount++;
+    var tablerow = buildRowEntry(highestCount, curInputDescription, curInputDeadline, curInputStatus);
+    $(toDoList).append(tablerow);
+    var $el = $('#row' + highestCount);
+    $el.find(selectStatus).val(curInputStatus);
+    addToStorage(highestCount, curInputDescription, curInputDeadline, curInputStatus);
+  }
+
+  function buildRowEntry(entryCount, curInputDescription, curInputDeadline, curInputStatus) {
+   return "<tr class='added-item' id='row" + entryCount + "'>\
     <td>\
       <div class='description'>" + curInputDescription + "</div>\
       <input class='description hidden' type='text' value='" + curInputDescription + "'/></td>\
@@ -108,10 +117,6 @@ $(document).ready(function(){
       <a class='button btn-small hidden' data-role='cancel-button' href='#'><span class='glyphicon glyphicon-refresh'><span>Cancel</span></span></a>\
     </td>\
     </tr>";
-    $(toDoList).append(tablerow);
-    var $el = $('#row' + entryCount);
-    $el.find(selectStatus).val(curInputStatus);
-    addToStorage(entryCount, curInputDescription, curInputDeadline, curInputStatus);
   }
 
   function emptyCurrentRow(el) {
@@ -186,6 +191,23 @@ $(document).ready(function(){
 
   function removeFromStorage(rowNum) {
     localStorage.removeItem(rowNum);
+  }
+
+  function populateList() {
+    for(var key in localStorage) {
+      var storage = JSON.parse(localStorage.getItem(key));
+      var curInputDescription = storage.description;
+      var curInputDeadline = storage.deadline;
+      var curInputStatus = storage.status;
+      var entryCount = storage.number;
+      var tablerow = buildRowEntry(entryCount, curInputDescription, curInputDeadline, curInputStatus);
+      $(toDoList).append(tablerow);
+      var $el = $('#row' + entryCount);
+      $el.find(selectStatus).val(curInputStatus);
+      if (entryCount > highestCount) {
+        highestCount = entryCount;
+      }
+    }
   }
 
 });
