@@ -52,7 +52,7 @@ $(document).ready(function(){
     inputDesc = el.find(inputDescription).val();
     inputDeadline = el.find(inputNeededby).val();
     inputStatus = el.find(selectStatus).val();
-    saveRow(el, el.find(inputDescription).val(), el.find(inputNeededby).val(), el.find(selectStatus).val());
+    saveRow(el, inputDesc, inputDeadline, inputStatus);
   });
 
   // Cancel an update to a row click
@@ -62,7 +62,8 @@ $(document).ready(function(){
     divDesc = el.find(divDescription).html();
     divDeadline = el.find(divNeededby).html();
     divStatus = el.find(divStatus).html();
-    cancelUpdate(el, el.find(divDescription).html(), el.find(divNeededby).html(), el.find(divStatus).html());
+    cancelUpdate(el, divDesc, divDeadline, divStatus);
+    console.log('divStatus (' + el.find(divStatus).html() + ')');
   });
 
   //On input values changing
