@@ -93,6 +93,7 @@ $(document).ready(function(){
     addToStorage(highestCount, curInputDescription, curInputDeadline, curInputStatus);
   }
 
+  // Build row entry
   function buildRowEntry(entryCount, curInputDescription, curInputDeadline, curInputStatus) {
    return "<tr class='added-item' id='row" + entryCount + "'>\
     <td>\
@@ -119,6 +120,7 @@ $(document).ready(function(){
     </tr>";
   }
 
+  // Empty input row
   function emptyCurrentRow(el) {
     el.find("input").val("");
     el.find("select").val("");
@@ -174,6 +176,7 @@ $(document).ready(function(){
     }
   }
 
+  // Add entry to local storage
   function addToStorage(rowNum, curInputDescription, curInputDeadline, curInputStatus) {
     var newRow = {};
     newRow.number = rowNum;
@@ -183,16 +186,19 @@ $(document).ready(function(){
     localStorage.setItem('row' + rowNum, JSON.stringify(newRow));
   }
 
+  // Edit local storage item
   function editStorageItem(rowNum, curInputDescription, curInputDeadline, curInputStatus) {
     localStorage.removeItem(rowNum);
     var justRowNumber = rowNum.substr(3);
     addToStorage(justRowNumber, curInputDescription, curInputDeadline, curInputStatus);
   }
 
+  // Remove entry from local storage
   function removeFromStorage(rowNum) {
     localStorage.removeItem(rowNum);
   }
 
+  // Populate list from local storage on page load
   function populateList() {
     for(var key in localStorage) {
       var storage = JSON.parse(localStorage.getItem(key));
