@@ -35,6 +35,8 @@ $(document).ready(function(){
   $(toDoList).on("click", deleteButton, function(event){
     var el = $(this).closest("tr");
     event.preventDefault();
+    removeFromStorage(el.attr('id'));
+    console.log(el.attr('id'));
     deleteRow(el);
   });
 
@@ -49,28 +51,29 @@ $(document).ready(function(){
   $(toDoList).on("click", saveButton, function(event){
     var el = $(this).closest("tr");
     event.preventDefault();
-    inputDesc = el.find(inputDescription).val();
-    inputDead = el.find(inputDeadline).val();
-    inputStat = el.find(selectStatus).val();
-    saveRow(el, inputDesc, inputDead, inputStat);
+    curInputDescription = el.find(inputDescription).val();
+    curInputDeadline = el.find(inputDeadline).val();
+    curInputStat = el.find(selectStatus).val();
+    saveRow(el, curInputDescription, curInputDeadline, curInputStat);
+    editStorageItem(el.attr('id'),curInputDescription, curInputDeadline, curInputStat);
   });
 
   // Cancel an update to a row click
   $(toDoList).on("click", cancelButton, function(event){
     var el = $(this).closest("tr");
     event.preventDefault();
-    divDesc = el.find(divDescription).html();
-    divDead = el.find(divDeadline).html();
-    divStat = el.find(divStatus).html();
-    cancelUpdate(el, divDesc, divDead, divStat);
+    curDivDescription = el.find(divDescription).html();
+    curDivDeadline = el.find(divDeadline).html();
+    curDivStatus = el.find(divStatus).html();
+    cancelUpdate(el, curDivDescription, curDivDeadline, curDivStatus);
   });
 
   //On input values changing
   $(toDoList).on("change", inputDescription + ',' + inputDeadline + ',' + selectStatus, function(event){
-    inputDescriptionValue = $(inputDescription).val();
-    inputDeadlineValue = $(inputDeadline).val();
-    selectStatusValue = $(selectStatus).val();
-    toggleAddButtonStatus(inputDescriptionValue, inputDeadlineValue, selectStatusValue);
+    curInputDescription = $(inputDescription).val();
+    curInputDeadline = $(inputDeadline).val();
+    curSelectStatus = $(selectStatus).val();
+    toggleAddButtonStatus(curInputDescription, curInputDeadline, curSelectStatus);
   });
 
 
@@ -78,21 +81,21 @@ $(document).ready(function(){
 
   // Add a row
 	function addRow(el){
-    var inputDesc = el.find(inputDescription).val();
-    var inputDead = el.find(inputDeadline).val();
-    var inputStat = el.find(selectStatus).val();
+    var curInputDescription = el.find(inputDescription).val();
+    var curInputDeadline = el.find(inputDeadline).val();
+    var curInputStatus = el.find(selectStatus).val();
     entryCount++;
     var tablerow = "<tr class='added-item' id='row" + entryCount + "'>\
     <td>\
-      <div class='description'>" + inputDesc + "</div>\
-      <input class='description hidden' type='text' value='" + inputDesc + "'/></td>\
+      <div class='description'>" + curInputDescription + "</div>\
+      <input class='description hidden' type='text' value='" + curInputDescription + "'/></td>\
     </td>\
     <td>\
-      <div class='deadline'>" + inputDead + "</div>\
-      <input class='deadline hidden' type='text' value='" + inputDead + "'/></td>\
+      <div class='deadline'>" + curInputDeadline + "</div>\
+      <input class='deadline hidden' type='text' value='" + curInputDeadline + "'/></td>\
     </td>\
     <td>\
-      <div class='status'>" + inputStat + "</div>\
+      <div class='status'>" + curInputStatus + "</div>\
       <select class='status hidden'>\
         <option value='Not started'>Not started</option>\
         <option value='In progress'>In progress</option>\
@@ -105,10 +108,10 @@ $(document).ready(function(){
       <a class='button btn-small hidden' data-role='cancel-button' href='#'><span class='glyphicon glyphicon-refresh'><span>Cancel</span></span></a>\
     </td>\
     </tr>";
-
     $(toDoList).append(tablerow);
     var $el = $('#row' + entryCount);
-    $el.find(selectStatus).val(inputStat);
+    $el.find(selectStatus).val(curInputStatus);
+    addToStorage(entryCount, curInputDescription, curInputDeadline, curInputStatus);
   }
 
   function emptyCurrentRow(el) {
@@ -133,9 +136,9 @@ $(document).ready(function(){
 
   // Save a row
   function saveRow(el, inputDesc, inputDeadline, inputStatus) {
-    el.find(divDescription).html(inputDesc || '');
-    el.find(divDeadline).html(inputDeadline || '');
-    el.find(divStatus).html(inputStatus || '');
+    el.find(divDescription).html(inputDesc);
+    el.find(divDeadline).html(inputDeadline);
+    el.find(divStatus).html(inputStatus);
     toggleRowStatus(el);
   }
 
@@ -164,6 +167,25 @@ $(document).ready(function(){
         $(addButton).addClass('disabled');
       }
     }
+  }
+
+  function addToStorage(rowNum, curInputDescription, curInputDeadline, curInputStatus) {
+    var newRow = {};
+    newRow.number = rowNum;
+    newRow.description = curInputDescription;
+    newRow.deadline = curInputDeadline;
+    newRow.status = curInputStatus;
+    localStorage.setItem('row' + rowNum, JSON.stringify(newRow));
+  }
+
+  function editStorageItem(rowNum, curInputDescription, curInputDeadline, curInputStatus) {
+    localStorage.removeItem(rowNum);
+    var justRowNumber = rowNum.substr(3);
+    addToStorage(justRowNumber, curInputDescription, curInputDeadline, curInputStatus);
+  }
+
+  function removeFromStorage(rowNum) {
+    localStorage.removeItem(rowNum);
   }
 
 });
