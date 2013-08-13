@@ -1,4 +1,6 @@
-todolist
+JS To do list
 ========
 
-To do playground
+Javascript to do list
+CSS Transitions
+HTML5 Local storage
