@@ -1715,6 +1715,10 @@ input[type="button"]:focus {
 .to-do-list .editable select {
   background-color: #f5fbe5;
 }
+.datepicker td,
+.datepicker th {
+  padding: 5px 10px;
+}
 tr.removed-item {
   animation: removed-item-animation 0.6s cubic-bezier(0.55, -0.04, 0.91, 0.94) forwards;
   -webkit-animation: removed-item-animation 0.6s cubic-bezier(0.55, -0.04, 0.91, 0.94) forwards;
